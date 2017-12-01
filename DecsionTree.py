@@ -32,7 +32,7 @@ def getInfoEntropy(dataSet):
         entropy -= prob * log(prob, 2) #2为底求对数
     return entropy
 
-# 抽离数据集
+# 根据特征抽离数据集
 def splitDataSet(dataSet, axes, value):
     newDataSet = []
     for vector in dataSet:
@@ -41,6 +41,9 @@ def splitDataSet(dataSet, axes, value):
             reduceVec.extend(vector[axes+1:])
             newDataSet.append(reduceVec)
     return newDataSet
+    
+def chooseBestFeatureToSplit(dataSet):
+    featureNum = len(dataSet)
     
     
 
