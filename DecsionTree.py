@@ -43,13 +43,31 @@ def splitDataSet(dataSet, axes, value):
     return newDataSet
     
 def chooseBestFeatureToSplit(dataSet):
-    featureNum = len(dataSet)
+    featureNum = len(dataSet[0]) - 1
+    baseEntroy = getInfoEntropy(dataSet)
+    bestInfoGain = 0.0
+    beatFeature = -1
+    for i in range(featureNum):
+        featureList = [example[i] for example in dataSet]
+        uniqueVals = set(featureList)
+        newEntroy = 0.0
+        for value in uniqueVals:
+            subDataSet = splitDataSet(dataSet, 1, value)
+            prob = len(subDataSet) / float(len(dataSet))
+            newEntroy += prob * getInfoEntropy(subDataSet)
+        infoGain = baseEntroy - newEntroy
+        if infoGain > bestInfoGain:
+            bestInfoGain = infoGain
+            bestFeature = i
+    return beatFeature
+    
     
     
 
 if __name__  == '__main__':
     dataSet, labels = createDataSet()
-    newdataSet = splitDataSet(dataSet, 0, 0)
-    print(newdataSet)
-    infoEntropy = getInfoEntropy(dataSet)
+    #newdataSet = splitDataSet(dataSet, 0, 0)
+    bestFeature = chooseBestFeatureToSplit(dataSet)
+    print(bestFeature)
+    #infoEntropy = getInfoEntropy(dataSet)
     #print(infoEntropy)
